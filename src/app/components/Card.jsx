@@ -3,7 +3,7 @@ function Card({ card, flippedCards, handleFlippedCards, foundCards }) {
   return (
     <>
       <div
-        className="flex flex-wrap justify-center items-center bg-blue-300 mx-auto w-[150px] h-[150px] text-center text-slate-800"
+        className="flex flex-wrap justify-center items-center bg-blue-300 mx-auto w-[150px] h-[150px] text-center text-slate-800 rounded-lg cursor-pointer"
         onClick={() => handleFlippedCards(card)}
       >
         <div className="">{flippedCards.includes(card) ? card.name : '?'}</div>
