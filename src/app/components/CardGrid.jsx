@@ -1,25 +1,34 @@
+'use client';
+
+import { useState } from 'react';
 import Card from './Card';
-import cards from '../data/cards';
 
-// src: https://stackoverflow.com/a/2450976
-function shuffle(array) {
-  let currentIndex = array.length;
+function CardGrid({ cards }) {
+  const [flippedCards, setFlippedCards] = useState([]);
+  const [foundCards, setFoundCards] = useState([]);
 
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-    // Pick a remaining element...
-    let randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  function handleFoundCards(cards) {
+    setFoundCards([...foundCards, ...cards]);
   }
-}
 
-function CardGrid() {
-  const cardsArr = [...cards, ...cards];
-  shuffle(cardsArr);
-  const cardsList = cardsArr.map((card) => <Card key={card.id} card={card} />);
+  function handleFlippedCards(card) {
+    if (flippedCards.includes(card)) return;
+
+    setFlippedCards([...flippedCards, card]);
+
+    if (flippedCards.length === 2) {
+      if (flippedCards[0].name === flippedCards[1].name) {
+        handleFoundCards([...flippedCards]);
+      }
+      setFlippedCards([card]);
+    }
+  }
+
+  const cardsList = cards.map((card) => (
+    <>
+      <Card key={card.id} card={card} flippedCards={flippedCards} handleFlippedCards={handleFlippedCards} foundCards={foundCards} />
+    </>
+  ));
 
   return (
     <>
