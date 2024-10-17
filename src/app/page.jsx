@@ -1,11 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import CardGrid from './components/CardGrid';
 import cards from './data/cards';
 import * as _ from 'lodash';
 import { useState } from 'react';
-import StartMenu from './components/StartMenu';
+import Game from './components/Game';
 
 export default function Home() {
   const [gameState, setGameState] = useState('menu');
@@ -17,17 +16,10 @@ export default function Home() {
     setGameState(state);
   }
 
-  let comp;
-  if (gameState === 'menu') {
-    comp = <StartMenu handleGameState={handleGameState} />;
-  } else if (gameState === 'game') {
-    comp = <CardGrid cards={cardsArr} />;
-  }
-
   return (
-    <div className="justify-items-center items-center gap-16 grid grid-rows-[20px_1fr_20px] mx-auto p-8 sm:p-20 pb-20 min-h-screen font-[family-name:var(--font-geist-sans)]">
+    <div className="flex flex-col justify-center justify-items-center items-center gap-6 mx-auto p-8 sm:p-20 pb-20 min-h-screen font-[family-name:var(--font-geist-sans)]">
       <h1 className="font-black text-4xl">Flip n&apos; Find</h1>
-      {comp}
+      <Game cards={cardsArr} gameState={gameState} handleGameState={handleGameState} />
     </div>
   );
 }

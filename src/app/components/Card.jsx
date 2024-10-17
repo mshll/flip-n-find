@@ -1,5 +1,5 @@
 function Card({ card, flippedCards, handleFlippedCards, foundCards }) {
-  if (foundCards.includes(card)) return <div className=""></div>;
+  if (foundCards.includes(card)) return <div className="w-[150px] h-[150px]"></div>;
   return (
     <>
       <div

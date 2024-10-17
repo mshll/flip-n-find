@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Card from './Card';
 
-function CardGrid({ cards }) {
+function CardGrid({ cards, incrementFailedAttempts }) {
   const [flippedCards, setFlippedCards] = useState([]);
   const [foundCards, setFoundCards] = useState([]);
 
@@ -19,6 +19,8 @@ function CardGrid({ cards }) {
     if (flippedCards.length === 2) {
       if (flippedCards[0].name === flippedCards[1].name) {
         handleFoundCards([...flippedCards]);
+      } else {
+        incrementFailedAttempts();
       }
       setFlippedCards([card]);
     }
