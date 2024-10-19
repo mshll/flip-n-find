@@ -1,42 +1,65 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Card from './Card';
+import { useState, useEffect } from "react";
+import Card from "./Card";
 
-function CardGrid({ cards, incrementFailedAttempts }) {
+function CardGrid({
+  cards,
+  incrementFailedAttempts,
+  handleScore,
+  handleGameState,
+}) {
   const [flippedCards, setFlippedCards] = useState([]);
-  const [foundCards, setFoundCards] = useState([]);
+  const [matchedCards, setMatchedCards] = useState([]);
 
-  function handleFoundCards(cards) {
-    setFoundCards([...foundCards, ...cards]);
+  function handleMatchedCards(mCards) {
+    setMatchedCards([...matchedCards, ...mCards]);
   }
 
   function handleFlippedCards(card) {
-    if (flippedCards.includes(card)) return;
+    if (flippedCards.length >= 2) return;
+    if (flippedCards.includes(card) || matchedCards.includes(card)) return;
 
     setFlippedCards([...flippedCards, card]);
-
-    if (flippedCards.length === 2) {
-      if (flippedCards[0].name === flippedCards[1].name) {
-        handleFoundCards([...flippedCards]);
-      } else {
-        incrementFailedAttempts();
-      }
-      setFlippedCards([card]);
-    }
   }
 
+  useEffect(() => {
+    if (flippedCards.length === 2) {
+      const [firstCard, secondCard] = flippedCards;
+      setTimeout(() => {
+        if (firstCard.name === secondCard.name) {
+          handleMatchedCards(flippedCards);
+
+          handleScore(true);
+          setFlippedCards([]);
+        } else {
+          handleScore(false);
+          incrementFailedAttempts();
+          setFlippedCards([]);
+        }
+      }, 500);
+    }
+  }, [flippedCards]);
+
+  useEffect(() => {
+    if (matchedCards.length === cards.length) {
+      setTimeout(() => {
+        handleGameState("end");
+      }, 500);
+    }
+  }, [matchedCards, cards, handleGameState]);
+
   const cardsList = cards.map((card) => (
-    <>
-      <Card key={card.id} card={card} flippedCards={flippedCards} handleFlippedCards={handleFlippedCards} foundCards={foundCards} />
-    </>
+    <Card
+      key={card.id}
+      card={card}
+      flippedCards={flippedCards}
+      handleFlippedCards={handleFlippedCards}
+      matchedCards={matchedCards}
+    />
   ));
 
-  return (
-    <>
-      <div className="gap-6 grid grid-cols-4">{cardsList}</div>
-    </>
-  );
+  return <div className="grid grid-cols-4 gap-6">{cardsList}</div>;
 }
 
 export default CardGrid;

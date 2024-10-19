@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  -webkit-user-select: none;
+  user-select: none;
+  user-drag: none;
+  app-region: no-drag;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -23,5 +30,25 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  .bg-animated-pattern {
+    --base-color: theme("colors.slate.800");
+    --accent-color: #1b2435;
+
+    background: var(--base-color);
+    background: linear-gradient(
+      135deg,
+      var(--base-color) 25%,
+      var(--accent-color) 25%,
+      var(--accent-color) 50%,
+      var(--base-color) 50%,
+      var(--base-color) 75%,
+      var(--accent-color) 75%,
+      var(--accent-color)
+    );
+    background-size: 40px 40px;
   }
 }
