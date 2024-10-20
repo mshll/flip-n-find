@@ -5,11 +5,21 @@ import StartMenu from "./StartMenu";
 import Button from "./Button";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+import Image from "next/image";
+import logo from "../images/fnf-logo.png";
+import logo2 from "../images/fnf-logo-2.png";
 
-function Game({ cards, gameState, handleGameState }) {
+function Game({
+  cards,
+  gameState,
+  handleGameState,
+  selectedTheme,
+  setSelectedTheme,
+}) {
   const { width, height } = useWindowSize();
   const [score, setScore] = useState(0);
   const [failedAttempts, setFailedAttempts] = useState(0);
+  const [logoHovered, setLogoHovered] = useState(false);
 
   function incrementFailedAttempts() {
     setFailedAttempts(failedAttempts + 1);
@@ -20,10 +30,26 @@ function Game({ cards, gameState, handleGameState }) {
     else if (score >= 2) setScore(score - 2);
   }
 
+  function resetGame() {
+    setScore(0);
+    setFailedAttempts(0);
+  }
+
+  function handleGameOver(state) {
+    handleGameState(state);
+    resetGame();
+  }
+
   let gameComponent = <div>ERROR - GS: {gameState}</div>;
 
   if (gameState === "menu")
-    gameComponent = <StartMenu handleGameState={handleGameState} />;
+    gameComponent = (
+      <StartMenu
+        handleGameState={handleGameState}
+        setSelectedTheme={setSelectedTheme}
+        selectedTheme={selectedTheme}
+      />
+    );
 
   if (gameState === "game")
     gameComponent = (
@@ -64,24 +90,37 @@ function Game({ cards, gameState, handleGameState }) {
             incrementFailedAttempts={incrementFailedAttempts}
             handleScore={handleScore}
             handleGameState={handleGameState}
+            resetGame={resetGame}
           />
         </div>
       </>
     );
 
+  const spanClass = "font-black text-blue-300";
   if (gameState === "end")
     gameComponent = (
-      <div className="m-auto flex flex-col items-center justify-center gap-6">
-        <h1 className="text-4xl font-black">Congratulations!</h1>
-        <p className="text-lg">
-          You scored <span className="font-black">{score}</span> points
+      <div className="m-auto flex flex-col items-center justify-center gap-6 font-medium">
+        <h1 className="text-4xl font-black">Congratulations! 🎉</h1>
+        <p className="text-lg tracking-widest">
+          You scored <span className={spanClass}>{score}</span> points
+          <br />
+          with <span className={spanClass}>{failedAttempts}</span> mistakes.
         </p>
-        <Button
-          onClick={() => handleGameState("game")}
-          className="mt-10 border-blue-400 bg-blue-300 font-bold text-slate-800"
-        >
-          Play Again
-        </Button>
+
+        <div className="flex gap-6">
+          <Button
+            onClick={() => handleGameOver("game")}
+            className="mt-10 border-blue-400 bg-blue-300 font-bold text-slate-800"
+          >
+            Play Again
+          </Button>
+          <Button
+            onClick={() => handleGameOver("menu")}
+            className="mt-10 border-blue-400 bg-blue-300 font-bold text-slate-800"
+          >
+            Main Menu
+          </Button>
+        </div>
         <Confetti
           width={width}
           height={height}
@@ -94,7 +133,30 @@ function Game({ cards, gameState, handleGameState }) {
       </div>
     );
 
-  return <>{gameComponent}</>;
+  return (
+    <>
+      <div className="mx-auto flex min-h-screen flex-col items-center justify-between justify-items-center gap-6 p-10 pb-4 text-center font-[family-name:var(--font-geist-sans)]">
+        <a href="/" className="mt-6">
+          <Image
+            src={logoHovered ? logo2 : logo}
+            alt="Flip n' Find"
+            width={`${gameState === "game" ? "150" : "300"}`}
+            height={200}
+            className="transition-all duration-500 ease-in-out"
+            onMouseEnter={() => setLogoHovered(true)}
+            onMouseLeave={() => setLogoHovered(false)}
+          />
+        </a>
+        {gameComponent}
+        <p
+          className={`mt-10 cursor-default text-xs font-semibold tracking-widest text-slate-200 transition-all duration-300 ease-in-out hover:[letter-spacing:3px]`}
+        >
+          A game by <span className="font-bold">Meshal</span> &{" "}
+          <span className="font-bold">Saja</span>.
+        </p>
+      </div>
+    </>
+  );
 }
 
 export default Game;

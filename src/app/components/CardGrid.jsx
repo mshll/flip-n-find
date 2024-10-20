@@ -8,6 +8,7 @@ function CardGrid({
   incrementFailedAttempts,
   handleScore,
   handleGameState,
+  resetGame,
 }) {
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedCards, setMatchedCards] = useState([]);
@@ -47,7 +48,7 @@ function CardGrid({
         handleGameState("end");
       }, 500);
     }
-  }, [matchedCards, cards, handleGameState]);
+  }, [matchedCards, cards, handleGameState, resetGame]);
 
   const cardsList = cards.map((card) => (
     <Card

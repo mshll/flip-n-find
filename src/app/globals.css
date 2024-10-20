@@ -6,7 +6,9 @@
   -webkit-user-select: none;
   user-select: none;
   user-drag: none;
+  -webkit-user-drag: none;
   app-region: no-drag;
+  -webkit-app-region: no-drag;
 }
 
 :root {
