@@ -16,7 +16,7 @@ function Card({ card, flippedCards, handleFlippedCards, matchedCards }) {
 
   return (
     <div
-      className={`group h-[150px] w-[150px] transition-opacity duration-1000 [perspective:1000px] ${matchedCards.includes(card) ? "opacity-80" : ""}`}
+      className={`h-[150px] w-[150px] duration-500 transition-all hover:scale-105 [perspective:1000px] ${matchedCards.includes(card) ? "opacity-80" : ""}`}
     >
       <div
         className={`relative h-full w-full rounded-lg font-bold shadow-xl transition-transform duration-500 [transform-style:preserve-3d] ${

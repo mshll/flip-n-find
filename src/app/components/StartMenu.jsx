@@ -2,8 +2,9 @@ import Button from "./Button";
 import ThemePicker from "./ThemePicker";
 import Image from "next/image";
 import cardShuffle from "../images/cards-shuffle.gif";
+import RadioButtons from "./RadioButtons";
 
-function StartMenu({ handleGameState, setSelectedTheme, selectedTheme }) {
+function StartMenu({ handleGameState, setSelectedTheme, selectedTheme, gridSize, setGridSize }) {
   return (
     <>
       <div className="mx-auto my-10 flex flex-col gap-10 text-slate-200">
@@ -22,6 +23,13 @@ function StartMenu({ handleGameState, setSelectedTheme, selectedTheme }) {
             setSelectedTheme={setSelectedTheme}
             selectedTheme={selectedTheme}
           />
+        </div>
+        <div className="">
+
+        <h6 className="mb-4 text-center text-sm font-semibold tracking-wider">
+          Pick a difficulty
+          </h6>
+        <RadioButtons options={["Easy", "Medium", "Hard"]} gridSize={gridSize} setGridSize={setGridSize}></RadioButtons>
         </div>
         <Button
           onClick={() => handleGameState("game")}

@@ -50,16 +50,16 @@ const cars = [
     name: "Nissan",
     image: nissanImage,
   },
-  // {
-  //   id: "cars9",
-  //   name: "Porsche",
-  //   image: porscheImage,
-  // },
-  // {
-  //   id: "cars10",
-  //   name: "Toyota",
-  //   image: toyotaImage,
-  // },
+  {
+    id: "cars9",
+    name: "Porsche",
+    image: porscheImage,
+  },
+  {
+    id: "cars10",
+    name: "Toyota",
+    image: toyotaImage,
+  },
 ];
 
 export default cars;

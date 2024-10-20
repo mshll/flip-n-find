@@ -34,16 +34,16 @@ const coffeeshops = [
     name: "dipndip",
     image: dipndipImage,
   },
-  //   {
-  //     id: "coffeeshop6",
-  //     name: "froyo",
-  //     image: froyoImage,
-  //   },
-  //   {
-  //     id: "coffeeshop7",
-  //     name: "mrholmes",
-  //     image: mrholmesImage,
-  //   },
+    {
+      id: "coffeeshop6",
+      name: "froyo",
+      image: froyoImage,
+    },
+    {
+      id: "coffeeshop7",
+      name: "mrholmes",
+      image: mrholmesImage,
+    },
   {
     id: "coffeeshop8",
     name: "opt",

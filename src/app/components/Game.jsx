@@ -18,7 +18,9 @@ function Game({
   handleGameState,
   selectedTheme,
   setSelectedTheme,
-  stopwatch,
+  timer,
+  gridSize,
+  setGridSize,
 }) {
   const { width, height } = useWindowSize();
   const [score, setScore] = useState(0);
@@ -55,6 +57,8 @@ function Game({
         handleGameState={handleGameState}
         setSelectedTheme={setSelectedTheme}
         selectedTheme={selectedTheme}
+        gridSize={gridSize}
+        setGridSize={setGridSize}
       />
     );
 
@@ -77,7 +81,7 @@ function Game({
               </svg>
               <p className="ms-2 text-xl font-black"> {score}</p>
             </div>
-            {stopwatch}
+            {timer}
             <button
               className="flex items-center text-lg transition-all duration-300 ease-in-out hover:rotate-90"
               onClick={() => handleGameOver("game")}
