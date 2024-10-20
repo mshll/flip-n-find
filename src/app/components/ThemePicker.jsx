@@ -16,7 +16,7 @@ export default function CustomSelect({ setSelectedTheme, selectedTheme }) {
           <option value="banks">Banks</option>
           <option value="cars">Cars</option>
           <option value="coffee">Coffee Shops</option>
-          <option value="landmarks">Landmarks</option>
+          <option value="flags">Flags</option>
         </select>
         <svg
           xmlns="http://www.w3.org/2000/svg"

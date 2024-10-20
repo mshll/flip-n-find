@@ -1,6 +1,6 @@
 import bartoneImage from "./images/coffeeShops/bartone.png";
 import caribouImage from "./images/coffeeShops/caribou.svg";
-import cervioImage from "./images/coffeeShops/cervio.webp";
+import ciervoImage from "./images/coffeeShops/ciervo.png";
 import coffeebeanImage from "./images/coffeeShops/coffee-bean.png";
 import dipndipImage from "./images/coffeeShops/dipndip.png";
 import froyoImage from "./images/coffeeShops/froyo.png";
@@ -21,8 +21,8 @@ const coffeeshops = [
   },
   {
     id: "coffeeshop3",
-    name: "cervio",
-    image: cervioImage,
+    name: "ciervo",
+    image: ciervoImage,
   },
   {
     id: "coffeeshop4",

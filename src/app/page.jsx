@@ -8,6 +8,7 @@ import Game from "./components/Game";
 import banks from "./data/banks";
 import cars from "./data/cars";
 import coffeeshops from "./data/coffeshops";
+import flags from "./data/flags";
 import GameTimer from "./components/GameTimer";
 
 export default function Home() {
@@ -26,6 +27,9 @@ export default function Home() {
       break;
     case "coffee":
       cards = coffeeshops;
+      break;
+    case "flags":
+      cards = flags;
       break;
     default:
       cards = banks;
