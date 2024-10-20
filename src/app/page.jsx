@@ -7,11 +7,12 @@ import { useState } from "react";
 import Game from "./components/Game";
 import banks from "./data/banks";
 import cars from "./data/cars";
+import coffeeshops from "./data/coffeshops";
 
 export default function Home() {
   const [gameState, setGameState] = useState("menu");
   const [selectedTheme, setSelectedTheme] = useState("banks");
-
+  const [gameCards, setGameCards] = useState([]);
   let cards;
 
   switch (selectedTheme) {
@@ -21,6 +22,9 @@ export default function Home() {
     case "cars":
       cards = cars;
       break;
+    case "coffee":
+      cards = coffeeshops;
+      break;
     default:
       cards = banks;
   }
@@ -29,9 +33,8 @@ export default function Home() {
   const cards2 = cards.map((card) => ({ ...card, id: card.id + "-2" }));
   const cardsArr = _.shuffle([...cards, ...cards2]);
 
-  const [gameCards, setGameCards] = useState(cardsArr);
-
   function handleGameState(state) {
+    setGameCards(cardsArr);
     setGameState(state);
   }
 
