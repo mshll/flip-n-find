@@ -30,7 +30,6 @@ function CardGrid({
       setTimeout(() => {
         if (firstCard.name === secondCard.name) {
           handleMatchedCards(flippedCards);
-
           handleScore(true);
           setFlippedCards([]);
         } else {

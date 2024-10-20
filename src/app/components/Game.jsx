@@ -8,9 +8,12 @@ import Confetti from "react-confetti";
 import Image from "next/image";
 import logo from "../images/fnf-logo.png";
 import logo2 from "../images/fnf-logo-2.png";
+import * as _ from "lodash";
+import Stopwatch from "./Stopwatch";
 
 function Game({
   cards,
+  setGameCards,
   gameState,
   handleGameState,
   selectedTheme,
@@ -20,6 +23,7 @@ function Game({
   const [score, setScore] = useState(0);
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [logoHovered, setLogoHovered] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
 
   function incrementFailedAttempts() {
     setFailedAttempts(failedAttempts + 1);
@@ -33,9 +37,11 @@ function Game({
   function resetGame() {
     setScore(0);
     setFailedAttempts(0);
+    setGameCards(_.shuffle([...cards]));
   }
 
-  function handleGameOver(state) {
+  function handleGameOver(state, isFailed = false) {
+    setIsFailed(isFailed);
     handleGameState(state);
     resetGame();
   }
@@ -70,6 +76,33 @@ function Game({
               </svg>
               <p className="ms-2 text-xl font-black"> {score}</p>
             </div>
+            <Stopwatch
+              className={`font-mono text-xl font-bold`}
+              limit={"00:01:00"}
+              onCallback={() => handleGameOver("end", true)}
+            />
+            <button
+              className="flex items-center text-lg transition-all duration-300 ease-in-out hover:rotate-90"
+              onClick={() => handleGameOver("game")}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.2em"
+                height="1.2em"
+                viewBox="0 0 24 24"
+              >
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                >
+                  <path d="M12 3a9 9 0 1 1-5.657 2" />
+                  <path d="M3 4.5h4v4" />
+                </g>
+              </svg>
+            </button>
             <div className="flex items-center text-lg">
               <p className="me-2 text-xl font-black"> {failedAttempts}</p>
               <svg
@@ -86,6 +119,7 @@ function Game({
             </div>
           </div>
           <CardGrid
+            key="card-grid"
             cards={cards}
             incrementFailedAttempts={incrementFailedAttempts}
             handleScore={handleScore}
@@ -100,13 +134,32 @@ function Game({
   if (gameState === "end")
     gameComponent = (
       <div className="m-auto flex flex-col items-center justify-center gap-6 font-medium">
-        <h1 className="text-4xl font-black">Congratulations! 🎉</h1>
-        <p className="text-lg tracking-widest">
-          You scored <span className={spanClass}>{score}</span> points
-          <br />
-          with <span className={spanClass}>{failedAttempts}</span> mistakes.
-        </p>
-
+        {isFailed ? (
+          <>
+            <h1 className="text-4xl font-black">Game Over! 😢</h1>
+            <p className="text-lg tracking-widest">
+              You tried your best, but time is over
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="text-4xl font-black">Congratulations! 🎉</h1>
+            <p className="text-lg tracking-widest">
+              You scored <span className={spanClass}>{score}</span> points
+              <br />
+              with <span className={spanClass}>{failedAttempts}</span> mistakes.
+            </p>
+            <Confetti
+              width={width}
+              height={height}
+              numberOfPieces={300}
+              confettiSource={{ x: 0, y: height, w: width, h: 0 }}
+              initialVelocityY={30}
+              gravity={0.2}
+              recycle={false}
+            />
+          </>
+        )}
         <div className="flex gap-6">
           <Button
             onClick={() => handleGameOver("game")}
@@ -121,15 +174,6 @@ function Game({
             Main Menu
           </Button>
         </div>
-        <Confetti
-          width={width}
-          height={height}
-          numberOfPieces={300}
-          confettiSource={{ x: 0, y: height, w: width, h: 0 }}
-          initialVelocityY={30}
-          gravity={0.2}
-          recycle={false}
-        />
       </div>
     );
 

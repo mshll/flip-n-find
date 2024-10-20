@@ -25,9 +25,11 @@ export default function Home() {
       cards = banks;
   }
 
-  _.shuffle(cards);
+  cards = _.shuffle(cards);
   const cards2 = cards.map((card) => ({ ...card, id: card.id + "-2" }));
   const cardsArr = _.shuffle([...cards, ...cards2]);
+
+  const [gameCards, setGameCards] = useState(cardsArr);
 
   function handleGameState(state) {
     setGameState(state);
@@ -36,7 +38,8 @@ export default function Home() {
   return (
     <>
       <Game
-        cards={cardsArr}
+        cards={gameCards}
+        setGameCards={setGameCards}
         gameState={gameState}
         handleGameState={handleGameState}
         selectedTheme={selectedTheme}
