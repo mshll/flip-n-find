@@ -1,58 +1,53 @@
-"use client";
+/* eslint-disable react-hooks/exhaustive-deps */
+'use client'
 
-import { useState, useEffect } from "react";
-import Card from "./Card";
+import { useState, useEffect } from 'react'
+import Card from './Card'
 
-function CardGrid({
-  cards,
-  incrementFailedAttempts,
-  handleScore,
-  handleGameState,
-  resetGame,
-}) {
-  const [flippedCards, setFlippedCards] = useState([]);
-  const [matchedCards, setMatchedCards] = useState([]);
+function CardGrid({ cards, incrementFailedAttempts, handleScore, handleGameState, resetGame }) {
+  const [flippedCards, setFlippedCards] = useState([])
+  const [matchedCards, setMatchedCards] = useState([])
 
   function handleMatchedCards(mCards) {
-    setMatchedCards([...matchedCards, ...mCards]);
+    setMatchedCards([...matchedCards, ...mCards])
   }
 
   function handleFlippedCards(card) {
-    if (flippedCards.length >= 2) return;
-    if (flippedCards.includes(card) || matchedCards.includes(card)) return;
+    if (flippedCards.length >= 2) return
+    if (flippedCards.includes(card) || matchedCards.includes(card)) return
 
-    setFlippedCards([...flippedCards, card]);
+    setFlippedCards([...flippedCards, card])
   }
 
   useEffect(() => {
     if (flippedCards.length === 2) {
-      const [firstCard, secondCard] = flippedCards;
+      const [firstCard, secondCard] = flippedCards
       setTimeout(() => {
         if (firstCard.name === secondCard.name) {
-          handleMatchedCards(flippedCards);
-          handleScore(true);
-          setFlippedCards([]);
+          handleMatchedCards(flippedCards)
+          handleScore(true)
+          setFlippedCards([])
         } else {
-          handleScore(false);
-          incrementFailedAttempts();
-          setFlippedCards([]);
+          handleScore(false)
+          incrementFailedAttempts()
+          setFlippedCards([])
         }
-      }, 500);
+      }, 500)
     }
-  }, [flippedCards]);
+  }, [flippedCards])
 
   useEffect(() => {
     if (matchedCards.length === cards.length) {
       setTimeout(() => {
-        handleGameState("end");
-      }, 500);
+        handleGameState('end')
+      }, 500)
     }
-  }, [matchedCards, cards, handleGameState, resetGame]);
+  }, [matchedCards, cards])
 
   useEffect(() => {
-    setFlippedCards([]);
-    setMatchedCards([]);
-  }, [handleGameState]);
+    setFlippedCards([])
+    setMatchedCards([])
+  }, [handleGameState])
 
   const cardsList = cards.map((card) => (
     <Card
@@ -62,11 +57,13 @@ function CardGrid({
       handleFlippedCards={handleFlippedCards}
       matchedCards={matchedCards}
     />
-  ));
+  ))
 
-  return <>
-  <div className="grid grid-cols-4 gap-6">{cardsList}</div>
-  </>;
+  return (
+    <>
+      <div className='grid grid-cols-4 gap-6'>{cardsList}</div>
+    </>
+  )
 }
 
-export default CardGrid;
+export default CardGrid

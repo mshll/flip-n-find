@@ -37,7 +37,7 @@ body {
 
 @layer utilities {
   .bg-animated-pattern {
-    --base-color: theme("colors.slate.800");
+    --base-color: theme('colors.slate.800');
     --accent-color: #1b2435;
 
     background: var(--base-color);

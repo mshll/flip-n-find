@@ -1,26 +1,26 @@
-import Image from "next/image";
+import Image from 'next/image'
 
 function Card({ card, flippedCards, handleFlippedCards, matchedCards }) {
-  const isFlipped = flippedCards.includes(card) || matchedCards.includes(card);
+  const isFlipped = flippedCards.includes(card) || matchedCards.includes(card)
 
   const handleClick = () => {
-    if (matchedCards.includes(card)) return;
-    handleFlippedCards(card);
-  };
+    if (matchedCards.includes(card)) return
+    handleFlippedCards(card)
+  }
 
   let cardFaceClasses =
-    "absolute inset-0 flex h-full w-full items-center justify-center rounded-lg text-center text-slate-800";
-  let cardPointer = matchedCards.includes(card)
-    ? "pointer-events-none"
-    : "cursor-pointer";
+    'absolute inset-0 flex h-full w-full items-center justify-center rounded-lg text-center text-slate-800'
+  let cardPointer = matchedCards.includes(card) ? 'pointer-events-none' : 'cursor-pointer'
 
   return (
     <div
-      className={`h-[150px] w-[150px] duration-500 transition-all hover:scale-105 [perspective:1000px] ${matchedCards.includes(card) ? "opacity-80" : ""}`}
+      className={`h-[150px] w-[150px] transition-all duration-500 [perspective:1000px] hover:scale-105 ${
+        matchedCards.includes(card) ? 'opacity-80' : ''
+      }`}
     >
       <div
         className={`relative h-full w-full rounded-lg font-bold shadow-xl transition-transform duration-500 [transform-style:preserve-3d] ${
-          isFlipped ? "[transform:rotateY(180deg)]" : ""
+          isFlipped ? '[transform:rotateY(180deg)]' : ''
         } ${cardPointer}`}
         onClick={handleClick}
       >
@@ -34,11 +34,11 @@ function Card({ card, flippedCards, handleFlippedCards, matchedCards }) {
         <div
           className={`text-xl transition-colors duration-500 [backface-visibility:hidden] [transform:rotateY(180deg)] ${cardFaceClasses} bg-slate-200`}
         >
-          <Image src={card.image} alt={card.name} width={100} height={100} />
+          <Image src={card.image} alt={card.name} width={100} height={100} className='rounded-lg' />
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Card;
+export default Card

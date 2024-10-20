@@ -1,5 +1,3 @@
-import React from "react";
-
 function Button({ className, children, ...props }) {
   return (
     <button
@@ -8,7 +6,7 @@ function Button({ className, children, ...props }) {
     >
       {children}
     </button>
-  );
+  )
 }
 
-export default Button;
+export default Button
