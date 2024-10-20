@@ -59,7 +59,9 @@ function CardGrid({
     />
   ));
 
-  return <div className="grid grid-cols-4 gap-6">{cardsList}</div>;
+  return <>
+  <div className="grid grid-cols-4 gap-6">{cardsList}</div>
+  </>;
 }
 
 export default CardGrid;

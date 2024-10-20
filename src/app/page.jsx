@@ -5,6 +5,7 @@ import Image from "next/image";
 import * as _ from "lodash";
 import { useState } from "react";
 import Game from "./components/Game";
+import Stopwatch from "./components/Stopwatch";
 import banks from "./data/banks";
 import cars from "./data/cars";
 import coffeeshops from "./data/coffeshops";
@@ -36,7 +37,16 @@ export default function Home() {
   function handleGameState(state) {
     setGameCards(cardsArr);
     setGameState(state);
+    if (state === "game") {
+      window.scrollBy({ top: 100, behavior: "smooth" });
+    }
   }
+
+  const stopwatch = (<Stopwatch
+              className={`font-mono text-xl font-bold`}
+              limit={"00:01:00"}
+              onCallback={() => handleGameOver("end", true)}
+            />);
 
   return (
     <>
@@ -47,6 +57,7 @@ export default function Home() {
         handleGameState={handleGameState}
         selectedTheme={selectedTheme}
         setSelectedTheme={setSelectedTheme}
+        stopwatch={stopwatch}
       />
     </>
   );

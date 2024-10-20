@@ -9,7 +9,7 @@ import Image from "next/image";
 import logo from "../images/fnf-logo.png";
 import logo2 from "../images/fnf-logo-2.png";
 import * as _ from "lodash";
-import Stopwatch from "./Stopwatch";
+
 
 function Game({
   cards,
@@ -18,6 +18,7 @@ function Game({
   handleGameState,
   selectedTheme,
   setSelectedTheme,
+  stopwatch,
 }) {
   const { width, height } = useWindowSize();
   const [score, setScore] = useState(0);
@@ -60,7 +61,7 @@ function Game({
   if (gameState === "game")
     gameComponent = (
       <>
-        <div className="m-auto flex flex-col items-center justify-between gap-6">
+        <div className="m-auto flex flex-col items-center justify-between gap-6" id="gameview">
           <div className="mx-auto flex w-full items-center justify-between">
             <div className="flex items-center text-lg">
               <svg
@@ -76,11 +77,7 @@ function Game({
               </svg>
               <p className="ms-2 text-xl font-black"> {score}</p>
             </div>
-            <Stopwatch
-              className={`font-mono text-xl font-bold`}
-              limit={"00:01:00"}
-              onCallback={() => handleGameOver("end", true)}
-            />
+            {stopwatch}
             <button
               className="flex items-center text-lg transition-all duration-300 ease-in-out hover:rotate-90"
               onClick={() => handleGameOver("game")}
@@ -180,7 +177,7 @@ function Game({
   return (
     <>
       <div className="mx-auto flex min-h-screen flex-col items-center justify-between justify-items-center gap-6 p-10 pb-4 text-center font-[family-name:var(--font-geist-sans)]">
-        <a href="/" className="mt-6">
+        <a href="/" className={`${gameState === "game" ? "mt-0" : "mt-6"} transition-all duration-500 ease-in-out`}>
           <Image
             src={logoHovered ? logo2 : logo}
             alt="Flip n' Find"
