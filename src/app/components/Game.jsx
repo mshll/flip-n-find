@@ -9,7 +9,7 @@ import Image from "next/image";
 import logo from "../images/fnf-logo.png";
 import logo2 from "../images/fnf-logo-2.png";
 import * as _ from "lodash";
-
+import GameTimer from "../components/GameTimer";
 
 function Game({
   cards,
@@ -18,7 +18,7 @@ function Game({
   handleGameState,
   selectedTheme,
   setSelectedTheme,
-  timer,
+  time,
   gridSize,
   setGridSize,
 }) {
@@ -41,13 +41,20 @@ function Game({
     setScore(0);
     setFailedAttempts(0);
     setGameCards(_.shuffle([...cards]));
+    handleGameState("game");
   }
 
   function handleGameOver(state, isFailed = false) {
     setIsFailed(isFailed);
     handleGameState(state);
-    resetGame();
   }
+
+  const timer = (<GameTimer
+    className={`font-mono text-xl font-bold`}
+    expiryTimestamp={time}
+    onExpire={() => handleGameOver("end", true)}
+    resetGame={resetGame}
+    />);
 
   let gameComponent = <div>ERROR - GS: {gameState}</div>;
 
@@ -84,7 +91,7 @@ function Game({
             {timer}
             <button
               className="flex items-center text-lg transition-all duration-300 ease-in-out hover:rotate-90"
-              onClick={() => handleGameOver("game")}
+              onClick={() => resetGame()}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +170,7 @@ function Game({
         )}
         <div className="flex gap-6">
           <Button
-            onClick={() => handleGameOver("game")}
+            onClick={() => resetGame()}
             className="mt-10 border-blue-400 bg-blue-300 font-bold text-slate-800"
           >
             Play Again

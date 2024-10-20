@@ -9,7 +9,6 @@ import banks from "./data/banks";
 import cars from "./data/cars";
 import coffeeshops from "./data/coffeshops";
 import flags from "./data/flags";
-import GameTimer from "./components/GameTimer";
 
 export default function Home() {
   const [gameState, setGameState] = useState("menu");
@@ -35,18 +34,11 @@ export default function Home() {
       cards = banks;
   }
 
-
   let time = new Date();
   const dur = gridSize === "Easy" ? 60 : gridSize === "Medium" ? 90 : 120;
   time.setSeconds(time.getSeconds() + dur);
-  const timer = (<GameTimer
-    className={`font-mono text-xl font-bold`}
-    expiryTimestamp={time}
-    onExpire={() => handleGameOver("end", true)}
-    />);
 
-    function handleGameState(state) {
-
+  function handleGameState(state) {
       cards = _.shuffle(cards);
       const size = gridSize === "Easy" ? 3 : gridSize === "Medium" ? 4 : 5;
       cards = cards.slice(0, size*2);
@@ -54,9 +46,6 @@ export default function Home() {
       const cardsArr = _.shuffle([...cards, ...cards2]);
       setGameCards(cardsArr);
       setGameState(state);
-      if (state === "game") {
-        window.scrollBy({ top: 100, behavior: "smooth" });
-      }
       time = new Date();
       time.setSeconds(time.getSeconds() + 60);
     }
@@ -70,7 +59,7 @@ export default function Home() {
         handleGameState={handleGameState}
         selectedTheme={selectedTheme}
         setSelectedTheme={setSelectedTheme}
-        timer={timer}
+        time={time}
         gridSize={gridSize}
         setGridSize={setGridSize}
       />

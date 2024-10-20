@@ -49,6 +49,11 @@ function CardGrid({
     }
   }, [matchedCards, cards, handleGameState, resetGame]);
 
+  useEffect(() => {
+    setFlippedCards([]);
+    setMatchedCards([]);
+  }, [handleGameState]);
+
   const cardsList = cards.map((card) => (
     <Card
       key={card.id}
